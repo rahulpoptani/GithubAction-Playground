@@ -1,27 +1,30 @@
-name: First Worflow
+name: Workflow Commands
 on: [push]
 
 jobs:
-    run-shell-commands:
+    testing-wf-commands:
         runs-on: ubuntu-latest
         steps:
-            - name: echo a string
-              run: echo "Hello String"
-            - name: Multiline Command
-              run: |
-                node -v
-                npm -v
-    parallel-job-run:
-        runs-on: macos-latest
-        steps:
-            - name: View SW Version
-              run: sw_vers
-    dependent-job:
-        runs-on: windows-latest
-        needs: run-shell-commands
-        steps:
-            - name: echo a string
-              run: Write-Output "Windows String"
-            - name: Error Step
-              run: some-random-command-that-doesnt-exists
+            - name: Setting an error message
+              run: echo "::error::This is an error message"
 
+            - name: Setting an error message with params
+              run: echo "::error title=Error title,file=app.js,line=2::Missing semicolon"
+
+            - name: Setting an warning message with params
+              run: echo "::warning title=Warning title,file=app.js,line=2::Missing semicolon"
+
+            - name: Setting an debug message with params
+              run: echo "::debug title=Debug title,file=app.js,line=2::Missing semicolon"
+
+            - name: Setting an notice message with params
+              run: echo "::notice title=Notice title,file=app.js,line=2::Missing semicolon"
+            
+            - name: Group of logs
+              run: |
+                echo "::group::My group title"
+                echo "Inside Group"
+                echo "::endgroup::"
+
+            - name: Masking a value
+              run: echo "::add-mask::Secret String"
