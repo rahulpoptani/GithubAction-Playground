@@ -1,3 +1,4 @@
+
 name: Workflow Commands
 on: [push]
 
@@ -20,3 +21,11 @@ jobs:
             - name: Setting an notice message with params
               run: echo "::notice title=Notice title,file=app.js,line=2::Missing semicolon"
             
+            - name: Group of logs
+              run: |
+                echo "::group::My group title"
+                echo "Inside Group"
+                echo "::endgroup::"
+
+            - name: Masking a valuee
+              run: echo "::add-mask::Secret Stringg"
