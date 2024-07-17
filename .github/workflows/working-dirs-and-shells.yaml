@@ -1,6 +1,11 @@
 name: Working Directory and Shells
 on: [push]
 
+# Set default shell as bash for all jobs
+defaults:
+  run:
+    shell: bash
+
 jobs:
     display-wd-info:
         runs-on: ubuntu-latest
@@ -12,3 +17,23 @@ jobs:
                 echo "GITHUB_SHA: $GITHUB_SHA"
                 echo "GITHUB_REPOSITORY: $GITHUB_REPOSITORY"
                 echo "GITHUB_WORKSPACE: $GITHUB_WORKSPACE"
+    display-wd-info-windows:
+        runs-on: windows-latest
+        # Overrride default shell from bash to powershell for this job
+        defaults:
+          run:
+            shell: pwsh
+        steps:
+        - name: Display Working Directory & List Files
+          run: |
+            Get-Location
+            dir
+            echo $env:GITHUB_SHA
+            echo $env:GITHUB_REPOSITORY
+            echo $env:GITHUB_WORKSPACE
+        - name: Python Shell
+          # change shell to python shell for running any python script  
+          shell: python
+          run: |
+            import platform 
+            print(platform.processor())
